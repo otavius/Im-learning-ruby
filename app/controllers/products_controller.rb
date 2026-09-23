@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  allow_unauthenticated_access only: %i[index show]
   before_action :set_product, only: %i[ show edit update destroy]
 
 
@@ -6,38 +7,38 @@ class ProductsController < ApplicationController
     @product = Product.all
   end
 
-  def show 
+  def show
   end
 
-  def new 
-    @product = Product.new 
-  end 
+  def new
+    @product = Product.new
+  end
 
-  def create 
+  def create
     @product = Product.new(product_params)
     if @product.save
       redirect_to @product
     else
       render :new, status: :unprocessable_entity
-    end 
-  end 
+    end
+  end
 
-  def edit 
-  end 
+  def edit
+  end
 
   def update
     @product = Product.find(params[:id])
     if @product.update(product_params)
       redirect_to @product
-    else 
+    else
       render :edit, status: :unprocessable_entity
     end
-  end 
+  end
 
   def destroy
     @product.destroy
     redirect_to products_path
-  end 
+  end
 
   private
 
@@ -46,7 +47,8 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    #params.except(product: [ :name ])
-    params.require(:product).permit(:name, :description, :price)
+    # params.except(product: [ :name ])
+    params.require(:product).permit(:name, :description, :featured_image)
+    # params.except(product: [ :name, :description, :featured_image ])
   end
 end
