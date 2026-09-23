@@ -27,3 +27,5 @@
 #   # Report violations without enforcing the policy.
 #   # config.content_security_policy_report_only = true
 # end
+# config/initializers/content_security_policy.rb
+Rails.application.config.content_security_policy_nonce_generator = ->(request) { SecureRandom.base64(16) }
